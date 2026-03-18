@@ -1,8 +1,11 @@
 package org.example.models;
 
+import java.util.Random;
+
 public class Dice {
     private static volatile Dice INSTANCE;
     private final int[] faces = {1,2,3,4,5,6};
+    private static Random random = new Random();
 
     private Dice() {
         if (INSTANCE != null) {
@@ -22,7 +25,7 @@ public class Dice {
     }
 
     public int roll(){
-        int randomIdx = (int)Math.abs(Math.floor(0 * Math.random() + 6));
+        int randomIdx = random.nextInt(faces.length);
         return faces[randomIdx];
     }
 }

@@ -29,7 +29,7 @@ public abstract class Game {
         this.activePlayers = new ArrayList<>();
     }
 
-    void addPlayer(Player p){
+    public void addPlayer(Player p){
         activePlayers.add(p);
         this.turnOrder.add(p);
     }
@@ -39,6 +39,33 @@ public abstract class Game {
         System.out.println("Board size: " + n + "x" + n + " (" + (n * n) + " cells)");
         System.out.println("Players: " + activePlayers.size());
         System.out.println("Snakes: " + b.getSnakes().size() + ", Ladders: " + b.getLadders().size());
+
+
+        // Print snake and ladder positions as text
+        System.out.println();
+        b.getSnakeMap().forEach((head, tail) ->
+                System.out.println("Snake: " + head + " -> " + tail));
+        b.getLadderMap().forEach((bottom, top) ->
+                System.out.println("Ladder: " + bottom + " -> " + top));
+        System.out.println();
+
+        int turnCount = 0;
+        while (!isGameOver()) {
+            makeMove();
+            turnCount++;
+
+            // Safety valve to prevent infinite loops
+            if (turnCount > 10000) {
+                System.out.println("Game ended due to turn limit.");
+                break;
+            }
+        }
+
+        System.out.println("\n=== Game Over! ===");
+        if (!activePlayers.isEmpty()) {
+            System.out.println("Remaining player: " + activePlayers.get(0).getId()
+                    + " at position " + activePlayers.get(0).getCurrentPos());
+        }
 
     }
 

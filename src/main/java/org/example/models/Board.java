@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-    int size;
-    List<Snake> snakes;
-    List<Ladder> ladders;
-    Map<Integer,Integer> snakeMap;
-    Map<Integer,Integer> ladderMap;
+    private final int size;
+    private List<Snake> snakes;
+    private List<Ladder> ladders;
+    private final Map<Integer,Integer> snakeMap;
+    private final Map<Integer,Integer> ladderMap;
 
     public Board(int size,List<Snake> snakes, List<Ladder> ladders) {
         this.size = size;
@@ -25,9 +25,9 @@ public class Board {
         }
 
         for(Ladder l : ladders){
-            int ladderStart = l.getStart();
-            int ladderEnd = l.getEnd();
-            ladderMap.put(ladderEnd,ladderStart);
+            int ladderBottom = l.getStart();
+            int ladderTop = l.getEnd();
+            ladderMap.put(ladderBottom,ladderTop);
         }
     }
 
@@ -47,8 +47,12 @@ public class Board {
         this.ladders = ladders;
     }
 
-    public boolean isOccupied(int pos){
-        return snakeMap.containsKey(pos) || ladderMap.containsKey(pos);
+    public Map<Integer, Integer> getSnakeMap() {
+        return snakeMap;
+    }
+
+    public Map<Integer, Integer> getLadderMap() {
+        return ladderMap;
     }
 
     public int getFinalPosition(int newPos){
@@ -68,18 +72,20 @@ public class Board {
     public boolean validatePlacement() {
         int maxPos = size * size;
 
-        // Check snakes are vertical (head and tail on different rows)
         for (Snake snake : snakes) {
-            if (snake.getStart() == snake.getEnd()) {
+            int headRow = (snake.getStart() - 1) / size;
+            int tailRow = (snake.getEnd() - 1) / size;
+            if (headRow == tailRow) {
                 System.out.println("Invalid: Snake is horizontal (same row) at positions "
                         + snake.getStart() + " -> " + snake.getEnd());
                 return false;
             }
         }
 
-        // Check ladders are vertical (top and bottom on different rows)
         for (Ladder ladder : ladders) {
-            if (ladder.getStart() == ladder.getEnd()) {
+            int bottomRow = (ladder.getStart() - 1) / size;
+            int topRow = (ladder.getEnd() - 1) / size;
+            if (bottomRow == topRow) {
                 System.out.println("Invalid: Ladder is horizontal (same row) at positions "
                         + ladder.getStart() + " -> " + ladder.getEnd());
                 return false;
@@ -102,7 +108,7 @@ public class Board {
                 return false;
             }
         }
-        // Check for cycles: a snake tail should not be at a ladder bottom and vice-versa
+
         for (int tailPos : snakeMap.values()) {
             if (ladderMap.containsKey(tailPos)) {
                 int ladderEnd = ladderMap.get(tailPos);

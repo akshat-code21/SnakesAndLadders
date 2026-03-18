@@ -1,8 +1,8 @@
 package org.example.models;
 
 public class Snake {
-    int start;
-    int end;
+    private int start;
+    private int end;
 
     public Snake(int start, int end) {
         this.start = start;

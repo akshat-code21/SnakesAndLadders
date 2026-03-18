@@ -1,21 +1,23 @@
 package org.example.models;
 
-public class Player {
-    String id;
-    int currentPos;
-    int consecutiveSixes;
+import java.util.UUID;
 
-    public Player(String id) {
+public class Player {
+    private UUID id;
+    private int currentPos;
+    private int consecutiveSixes;
+
+    public Player(UUID id) {
         this.id = id;
         this.currentPos = 0;
         this.consecutiveSixes = 0;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
