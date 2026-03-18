@@ -41,7 +41,6 @@ public abstract class Game {
         System.out.println("Snakes: " + b.getSnakes().size() + ", Ladders: " + b.getLadders().size());
 
 
-        // Print snake and ladder positions as text
         System.out.println();
         b.getSnakeMap().forEach((head, tail) ->
                 System.out.println("Snake: " + head + " -> " + tail));
@@ -54,7 +53,6 @@ public abstract class Game {
             makeMove();
             turnCount++;
 
-            // Safety valve to prevent infinite loops
             if (turnCount > 10000) {
                 System.out.println("Game ended due to turn limit.");
                 break;

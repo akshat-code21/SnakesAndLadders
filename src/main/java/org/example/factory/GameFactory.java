@@ -12,7 +12,7 @@ import java.util.Random;
 import java.util.*;
 
 public class GameFactory {
-    private static Random random = new Random();
+    private static final Random random = new Random();
     public static Game getGame(int n,int x,String type){
         Set<Integer> occupiedPositions = new HashSet<>();
 

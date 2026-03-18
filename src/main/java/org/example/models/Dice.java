@@ -5,7 +5,7 @@ import java.util.Random;
 public class Dice {
     private static volatile Dice INSTANCE;
     private final int[] faces = {1,2,3,4,5,6};
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
     private Dice() {
         if (INSTANCE != null) {
