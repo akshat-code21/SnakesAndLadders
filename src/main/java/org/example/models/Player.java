@@ -1,14 +1,14 @@
 package org.example.models;
 
-public class User {
+public class Player {
     String id;
     int currentPos;
     int consecutiveSixes;
 
-    public User(String id, int currentPos, int consecutiveSixes) {
+    public Player(String id) {
         this.id = id;
-        this.currentPos = currentPos;
-        this.consecutiveSixes = consecutiveSixes;
+        this.currentPos = 0;
+        this.consecutiveSixes = 0;
     }
 
     public String getId() {
@@ -33,5 +33,17 @@ public class User {
 
     public void setConsecutiveSixes(int consecutiveSixes) {
         this.consecutiveSixes = consecutiveSixes;
+    }
+
+    public void resetConsecutiveSixes(){
+        this.consecutiveSixes = 0;
+    }
+
+    public void incrementConsecutiveSixes() {
+        this.consecutiveSixes++;
+    }
+
+    public boolean hasWon(int n){
+        return currentPos == n*n;
     }
 }
